@@ -42,5 +42,6 @@ References
 ==========
 * [RPM documentation](http://rpm.org/documentation.html)
 * [Maximum RPM](http://rpm.org/max-rpm-snapshot/)
+* [RPM source](https://github.com/rpm-software-management/rpm)
 * [Python: Creating Built Distributions](https://docs.python.org/3/distutils/builtdist.html)
 * [Fedora Packaging Guidelines for Python](https://fedoraproject.org/wiki/Packaging:Python)

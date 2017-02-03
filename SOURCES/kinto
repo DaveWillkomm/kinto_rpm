@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+/opt/kinto/bin/kinto --ini /etc/opt/kinto/kinto.ini start

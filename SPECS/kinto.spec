@@ -6,6 +6,7 @@ License:       ASL 2.0
 URL:           http://kinto.readthedocs.io/
                # See https://fedoraproject.org/wiki/Packaging:SourceURL?rd=Packaging/SourceURL#Troublesome_URLs
 Source0:       https://github.com/Kinto/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source1:       kinto
 BuildRequires: postgresql-devel python35u-devel python35u-pip
 
 
@@ -22,6 +23,9 @@ BuildRequires: postgresql-devel python35u-devel python35u-pip
 %global __requires_exclude ^%{_builddir}/venv/bin/python.*$
 
 
+%define debug_package %{nil}
+
+
 %description
 Kinto
 
@@ -29,30 +33,37 @@ Kinto
 %prep
 %setup -q
 %{__python35u} -m venv --clear %{_builddir}/venv
-source %{_builddir}/venv/bin/activate
-pip install --upgrade pip setuptools wheel
+%{_builddir}/venv/bin/pip install --upgrade pip setuptools wheel
 
 
 %build
-source %{_builddir}/venv/bin/activate
-
 # Because we are installing Kinto as a package (and pinning package dependencies to specific versions is not a best
 # practice), but treating it as an application (where a repeatable installation is the goal), we use the Kinto project's
 # requirements.txt as constraints for pip install (see https://packaging.python.org/requirements/#install-requires-vs-requirements-files).
-pip install \
+%{_builddir}/venv/bin/pip install \
   --constraint=%{_builddir}/%{name}-%{version}/requirements.txt \
   %{_builddir}/%{name}-%{version} \
   sqlalchemy-postgresql-json==0.4.7 \
   zope.sqlalchemy==0.7.7
 
+%{_builddir}/venv/bin/kinto init --backend=postgresql
+
 
 %install
+install -d %{buildroot}/bin
+install -d %{buildroot}/etc/opt/kinto
 install -d %{buildroot}/opt/kinto
+install -d %{buildroot}/var/opt/kinto
 cp -R %{_builddir}/venv/* %{buildroot}/opt/kinto
+install %{SOURCE1} %{buildroot}/bin
+install %{_builddir}/kinto-%{version}/config/kinto.ini %{buildroot}/etc/opt/kinto
 
 
 %files
+/bin/kinto
 /opt/kinto
+/etc/opt/kinto/kinto.ini
+/var/opt/kinto
 
 
 %changelog
