@@ -1,5 +1,5 @@
 Name:          kinto
-Version:       5.3.2
+Version:       4.1.1
 Release:       %{?release_number}%{!?release_number:1}%{?dist}
 Summary:       Kinto
 License:       ASL 2.0
