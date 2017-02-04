@@ -6,7 +6,6 @@ License:       ASL 2.0
 URL:           http://kinto.readthedocs.io/
                # See https://fedoraproject.org/wiki/Packaging:SourceURL?rd=Packaging/SourceURL#Troublesome_URLs
 Source0:       https://github.com/Kinto/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
-Source1:       kinto
 BuildRequires: postgresql-devel python35u-devel python35u-pip
 
 
@@ -50,20 +49,15 @@ Kinto
 
 
 %install
-install -d %{buildroot}/bin
 install -d %{buildroot}/etc/opt/kinto
 install -d %{buildroot}/opt/kinto
-install -d %{buildroot}/var/opt/kinto
 cp -R %{_builddir}/venv/* %{buildroot}/opt/kinto
-install %{SOURCE1} %{buildroot}/bin
 install %{_builddir}/kinto-%{version}/config/kinto.ini %{buildroot}/etc/opt/kinto
 
 
 %files
-/bin/kinto
 /opt/kinto
 /etc/opt/kinto/kinto.ini
-/var/opt/kinto
 
 
 %changelog
