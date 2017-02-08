@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
 set -evx
 
-kinto_rpm_dir="/opt/kinto_rpm"
-rpmbuild -bb --define="_topdir ${kinto_rpm_dir}" "${kinto_rpm_dir}/SPECS/kinto.spec"
+project_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+rpmbuild -bb --define="_topdir ${project_dir}" "${project_dir}/SPECS/kinto.spec"
