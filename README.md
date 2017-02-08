@@ -22,15 +22,34 @@ From the host machine:
     
 On the guest build VM:
 
-    /opt/kinto_rpm/bin/build/buildrpm.sh
+    sudo /home/vagrant/kinto_rpm/bin/build/buildrpm.sh
+        
+Testing a Build
+===============
+Copy the package from the host to the test VM:
+
+    vagrant scp RPMS/x86_64/kinto-4.1.1-1.el7.centos.x86_64.rpm test:/home/vagrant
+    
+SSH into the test VM:
+
+    vagrant ssh test
+    
+Install the package on the test VM:
+
+    sudo yum -y install kinto-4.1.1-1.el7.centos.x86_64.rpm
+    
+Quickie test:
+
+    /opt/kinto/bin/kinto init --backend memory
+    /opt/kinto/bin/kinto start
+    curl http://localhost:8888/v1/
     
 How to Update to a New Version of Kinto
 =======================================
 1. Replace the source tarball
 2. Update `kinto.spec`'s `Version` tag to reflect the source version number
 3. Update the Python packages if applicable (see _A Note..._ below)
-3. Ensure the version of zope.sqlalchemy in the build's `pip install` command matches that in Kinto's `requirements.txt`
-   and that `sqlalchemy-postgresql-json`'s version is appropriate.
+3. Ensure that `sqlalchemy-postgresql-json`'s version in the build's `pip install` command is appropriate.
    
 A Note About Choosing the Python Version
 ========================================
