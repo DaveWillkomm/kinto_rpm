@@ -31,7 +31,13 @@ Kinto
 
 %prep
 %setup -q
-%{__python35u} -m venv --clear %{_builddir}/venv
+
+# Because venv uses the path used to create the virtual environment in the #! line of the scripts it installs in its bin
+# directory, we symlink /opt/kinto, which we want used in the #! lines as it will be valid on install target machines,
+# to %{_builddir}/venv, which is only valid on the build machine.
+ln -fs /opt/kinto %{_builddir}/venv
+%{__python35u} -m venv --clear /opt/kinto
+
 %{_builddir}/venv/bin/pip install --upgrade pip setuptools wheel
 
 
@@ -42,8 +48,9 @@ Kinto
 %{_builddir}/venv/bin/pip install \
   --constraint=%{_builddir}/%{name}-%{version}/requirements.txt \
   %{_builddir}/%{name}-%{version} \
+  raven \
   sqlalchemy-postgresql-json==0.4.7 \
-  zope.sqlalchemy==0.7.7
+  zope.sqlalchemy
 
 %{_builddir}/venv/bin/kinto init --backend=postgresql
 
