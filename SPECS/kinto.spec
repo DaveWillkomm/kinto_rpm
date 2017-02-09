@@ -6,6 +6,7 @@ License:       ASL 2.0
 URL:           http://kinto.readthedocs.io/
                # See https://fedoraproject.org/wiki/Packaging:SourceURL?rd=Packaging/SourceURL#Troublesome_URLs
 Source0:       https://github.com/Kinto/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
+Source1:       kinto.service
 BuildRequires: postgresql-devel python35u-devel python35u-pip
 
 
@@ -34,7 +35,7 @@ Kinto
 
 # Because venv uses the path used to create the virtual environment in the #! line of the scripts it installs in its bin
 # directory, we symlink /opt/kinto, which we want used in the #! lines as it will be valid on install target machines,
-# to %{_builddir}/venv, which is only valid on the build machine.
+# to BUILD/venv, which is only valid on the build machine.
 ln -fs /opt/kinto %{_builddir}/venv
 %{__python35u} -m venv --clear /opt/kinto
 
@@ -56,15 +57,22 @@ ln -fs /opt/kinto %{_builddir}/venv
 
 
 %install
+install -d %{buildroot}%{_unitdir}
 install -d %{buildroot}/etc/opt/kinto
 install -d %{buildroot}/opt/kinto
 cp -R %{_builddir}/venv/* %{buildroot}/opt/kinto
+install %{SOURCE1} %{buildroot}%{_unitdir}
 install %{_builddir}/kinto-%{version}/config/kinto.ini %{buildroot}/etc/opt/kinto
 
 
 %files
-/opt/kinto
+%{_unitdir}
 /etc/opt/kinto/kinto.ini
+/opt/kinto
+
+
+%post
+/usr/bin/systemctl daemon-reload
 
 
 %changelog
