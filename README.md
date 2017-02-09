@@ -64,3 +64,4 @@ References
 * [RPM source](https://github.com/rpm-software-management/rpm)
 * [Python: Creating Built Distributions](https://docs.python.org/3/distutils/builtdist.html)
 * [Fedora Packaging Guidelines for Python](https://fedoraproject.org/wiki/Packaging:Python)
+* [Creating and Modifying systemd Unit Files](https://access.redhat.com/documentation/en-US/Red_Hat_Enterprise_Linux/7/html/System_Administrators_Guide/sect-Managing_Services_with_systemd-Unit_Files.html)
