@@ -1,5 +1,5 @@
 Name:          kinto
-Version:       5.3.2
+Version:       6.0.3
 Release:       %{?release_number}%{!?release_number:1}%{?dist}
 Summary:       Kinto
 License:       ASL 2.0
@@ -7,7 +7,7 @@ URL:           http://kinto.readthedocs.io/
                # See https://fedoraproject.org/wiki/Packaging:SourceURL?rd=Packaging/SourceURL#Troublesome_URLs
 Source0:       https://github.com/Kinto/%{name}/archive/%{version}.tar.gz#/%{name}-%{version}.tar.gz
 Source1:       kinto.service
-BuildRequires: postgresql-devel python35u-devel python35u-pip
+BuildRequires: postgresql-devel python36u-devel python36u-pip
 
 
 # RPM's install post processing macro, __os_install_post, includes the brp-python-hardlink script
@@ -37,7 +37,7 @@ Kinto
 # directory, we symlink /opt/kinto, which we want used in the #! lines as it will be valid on install target machines,
 # to BUILD/venv, which is only valid on the build machine.
 ln -fs /opt/kinto %{_builddir}/venv
-%{__python35u} -m venv --clear /opt/kinto
+%{__python36} -m venv --clear /opt/kinto
 
 %{_builddir}/venv/bin/pip install --upgrade pip setuptools wheel
 
@@ -50,7 +50,7 @@ ln -fs /opt/kinto %{_builddir}/venv
   --constraint=%{_builddir}/%{name}-%{version}/requirements.txt \
   %{_builddir}/%{name}-%{version} \
   raven \
-  sqlalchemy-postgresql-json==0.4.7 \
+  sqlalchemy-postgresql-json==0.5.0 \
   zope.sqlalchemy
 
 %{_builddir}/venv/bin/kinto init --backend=postgresql
