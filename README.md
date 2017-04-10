@@ -3,6 +3,13 @@ Kinto RPM
 This project contains tooling to create [Kinto](http://kinto.readthedocs.io) RPMs targeting CentOS and using the
 PostgreSQL [backend](http://kinto.readthedocs.io/en/stable/configuration/settings.html#backends).
 
+Build Environment Prerequisite
+==============================
+As detailed in the [spec file's](SPECS/kinto.spec) `%prep`, on the build machine, the root user must create /opt/kinto
+and set the build user as the owner.
+
+Note that the development environment [build VM provisioning script](bin/build/provision.sh) takes care of this.
+
 Development Environment Setup
 =============================
 Vagrant is used for developing and testing the RPMs, and the build VM can be set up on macOS using Homebrew by executing
@@ -22,21 +29,17 @@ From the host machine:
     
 On the guest build VM:
 
-    sudo /home/vagrant/kinto_rpm/bin/build/buildrpm.sh
+    /home/vagrant/kinto_rpm/bin/build/buildrpm.sh
         
 Testing a Build
 ===============
-Copy the package from the host to the test VM:
+From the host machine:
 
-    vagrant scp RPMS/x86_64/kinto-4.1.1-1.el7.centos.x86_64.rpm test:/home/vagrant
+    bin/installrpm.sh
     
 SSH into the test VM:
 
     vagrant ssh test
-    
-Install the package on the test VM:
-
-    sudo yum -y install kinto-4.1.1-1.el7.centos.x86_64.rpm
     
 Quickie test:
 
@@ -61,6 +64,7 @@ References
 ==========
 * [RPM documentation](http://rpm.org/documentation.html)
 * [Maximum RPM](http://rpm.org/max-rpm-snapshot/)
+* [Maximum RPM: Automatic Dependencies](http://ftp.rpm.org/max-rpm/s1-rpm-depend-auto-depend.html)
 * [RPM source](https://github.com/rpm-software-management/rpm)
 * [Python: Creating Built Distributions](https://docs.python.org/3/distutils/builtdist.html)
 * [Fedora Packaging Guidelines for Python](https://fedoraproject.org/wiki/Packaging:Python)

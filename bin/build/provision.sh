@@ -14,3 +14,6 @@ yum -y install \
   rpmlint \
   tmux \
   tree
+
+mkdir -p /opt/kinto
+chown vagrant:vagrant /opt/kinto
