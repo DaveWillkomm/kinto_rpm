@@ -4,7 +4,7 @@ Documentation=http://kinto.readthedocs.io/
 
 [Service]
 Type=simple
-ExecStart=/opt/kinto/bin/kinto --ini /etc/opt/kinto/kinto.ini start
+ExecStart=/opt/kinto/bin/kinto start --ini /etc/opt/kinto/kinto.ini
 Restart=always
 
 [Install]
