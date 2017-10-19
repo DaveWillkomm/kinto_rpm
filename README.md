@@ -46,6 +46,8 @@ Quickie test:
     /opt/kinto/bin/kinto init --backend memory
     /opt/kinto/bin/kinto start
     curl http://localhost:8888/v1/
+    curl -X PUT http://user:password@localhost:8888/v1/buckets/testing123
+    curl http://user:password@localhost:8888/v1/buckets/testing123
     
 How to Update to a New Version of Kinto
 =======================================
